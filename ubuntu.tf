@@ -45,7 +45,7 @@ resource "vsphere_virtual_machine" "ubuntu" {
     properties = {
      hostname    = var.ubuntu.name
      password    = var.ubuntu.password
-      public-keys = chomp(tls_private_key.ssh.public_key_openssh)
+     public-keys = chomp(tls_private_key.ssh.public_key_openssh)
      user-data   = base64encode(data.template_file.ubuntu_userdata.rendered)
    }
  }
@@ -55,7 +55,7 @@ resource "vsphere_virtual_machine" "ubuntu" {
    type        = "ssh"
    agent       = false
    user        = "ubuntu"
-    private_key = tls_private_key.ssh.private_key_pem
+   private_key = tls_private_key.ssh.private_key_pem
   }
 
   provisioner "remote-exec" {
