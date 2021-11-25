@@ -5,6 +5,6 @@ network:
       dhcp4: false
       addresses:
         - ${ip4}
-      gateway4: [${gw4}]
+      gateway4: ${gw4}
       nameservers:
         addresses: [${dns}]
