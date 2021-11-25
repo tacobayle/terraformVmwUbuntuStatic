@@ -9,6 +9,8 @@ users:
     ssh_authorized_keys:
       - ${pubkey}
 
+ssh_pwauth: True
+
 chpasswd:
   list: |
     ubuntu: $password
