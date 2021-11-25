@@ -22,3 +22,10 @@ resource "vsphere_content_library_item" "file" {
   library_id  = vsphere_content_library.library.id
   file_url = "/tmp/${basename(var.content_library.source_url)}"
 }
+
+resource "null_resource" "remove_download_ubuntu" {
+  depends_on = [vsphere_content_library_item.file]
+  provisioner "local-exec" {
+    command = "rm -f /tmp/$(basename ${var.content_library.source_url})"
+  }
+}
