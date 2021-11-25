@@ -1,5 +1,5 @@
 output "ubuntu_static_ips" {
-  value = vsphere_virtual_machine.ubuntu_static.*.default_ip_address
+  value = var.ubuntu_ip4_addresses.*
 }
 
 output "ubuntu_dhcp_ips" {
