@@ -16,6 +16,18 @@ variable "vcenter" {
   }
 }
 
+variable "ubuntu_ip4_addresses" {
+  default = ["10.206.112.56/22", "10.206.112.57/22"]
+}
+
+variable "gateway4" {
+  default = "10.206.112.1"
+}
+
+variable "nameservers" {
+  default = "10.206.8.130, 10.206.8.130, 10.206.8.131"
+}
+
 variable "ssh_key" {
   type = map
   default = {

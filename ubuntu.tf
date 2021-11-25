@@ -10,7 +10,7 @@ resource "random_string" "ubuntu_password" {
 
 data "template_file" "ubuntu_userdata_static" {
   template = file("${path.module}/userdata/ubuntu_static.userdata")
-  count            = (var.dhcp == false ? var.ubuntu.count : 0)
+  count            = (var.dhcp == false ? length(var.ubuntu_ip4_addresses) : 0)
   vars = {
     password      = random_string.ubuntu_password.result
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
@@ -29,18 +29,8 @@ resource "random_string" "ubuntu_name_id" {
   min_lower        = 8
 }
 
-data "template_file" "ubuntu_userdata_dhcp" {
-  template = file("${path.module}/userdata/ubuntu_dhcp.userdata")
-  count            = (var.dhcp == true ? 1 : 0)
-  vars = {
-    password      = random_string.ubuntu_password.result
-    pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
-    hostname = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
-  }
-}
-
 resource "vsphere_virtual_machine" "ubuntu_static" {
-  count            = (var.dhcp == false ? var.ubuntu.count : 0)
+  count            = (var.dhcp == false ? length(var.ubuntu_ip4_addresses) : 0)
   name             = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
   datastore_id     = data.vsphere_datastore.datastore.id
   resource_pool_id = data.vsphere_resource_pool.pool.id
@@ -88,6 +78,16 @@ resource "vsphere_virtual_machine" "ubuntu_static" {
    inline      = [
      "while [ ! -f /tmp/cloudInitDone.log ]; do sleep 1; done"
    ]
+  }
+}
+
+data "template_file" "ubuntu_userdata_dhcp" {
+  template = file("${path.module}/userdata/ubuntu_dhcp.userdata")
+  count            = (var.dhcp == true ? 1 : 0)
+  vars = {
+    password      = random_string.ubuntu_password.result
+    pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
+    hostname = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
   }
 }
 
