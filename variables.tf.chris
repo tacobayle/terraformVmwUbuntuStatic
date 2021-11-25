@@ -8,11 +8,11 @@ variable "vsphere_server" {}
 variable "vcenter" {
   type = map
   default = {
-    dc            = "wdc-06-vc12"
-    cluster       = "wdc-06-vc12c01"
-    datastore     = "wdc-06-vc12c01-vsan"
-    network       = "vxw-dvs-34-virtualwire-3-sid-6120002-wdc-06-vc12-avi-mgmt"
-    resource_pool = "wdc-06-vc12c01/Resources"
+    dc            = "N1-DC"
+    cluster       = "N1-Cluster1"
+    datastore     = "vsanDatastore"
+    network       = "N1-T1_Segment-Backend_10.7.6.0-24"
+    resource_pool = "N1-Cluster1/Resources"
   }
 }
 
@@ -28,7 +28,7 @@ variable "ssh_key" {
 
 variable "content_library" {
   default = {
-    basename = "content_library_tf_"
+    name = "Content Library Build new web server"
 //    description = "Content Library Build new web server"
 //    files = ["/home/christoph/Downloads/bionic-server-cloudimg-amd64.ova"]
     source_url = "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.ova"

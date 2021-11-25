@@ -38,7 +38,7 @@ resource "vsphere_virtual_machine" "ubuntu" {
   }
 
   clone {
-    template_uuid = vsphere_content_library_item.files[0].id
+    template_uuid = vsphere_content_library_item.file.id
   }
 
   vapp {
