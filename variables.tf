@@ -21,7 +21,7 @@ variable "ssh_key" {
   default = {
     algorithm            = "RSA"
     rsa_bits             = "4096"
-    private_key_basename = "ssh_private_key_ubuntu"
+    private_key_basename = "ssh_private_key_ubuntu_"
     file_permission      = "0600"
   }
 }
@@ -29,8 +29,6 @@ variable "ssh_key" {
 variable "content_library" {
   default = {
     basename = "content_library_tf_"
-//    description = "Content Library Build new web server"
-//    files = ["/home/christoph/Downloads/bionic-server-cloudimg-amd64.ova"]
     source_url = "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.ova"
   }
 }
