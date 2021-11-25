@@ -17,7 +17,7 @@ variable "vcenter" {
 }
 
 variable "ubuntu_ip4_addresses" {
-  default = ["R", "10.206.112.57/22"]
+  default = ["10.206.112.56/22", "10.206.112.57/22"]
 }
 
 variable "gateway4" {
