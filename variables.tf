@@ -42,6 +42,7 @@ variable "ubuntu" {
   default = {
     basename = "ubuntu_tf_"
     count = 2
+    username = "ubuntu"
     cpu = 1
     memory = 2048
     disk = 20

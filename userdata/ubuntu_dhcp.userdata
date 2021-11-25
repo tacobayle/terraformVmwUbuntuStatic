@@ -13,8 +13,8 @@ ssh_pwauth: True
 
 chpasswd:
   list: |
-    ubuntu: $password
-    aviadmin: $password
+    ubuntu:$password
+    aviadmin:$password
   expire: False
 
 write_files:

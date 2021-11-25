@@ -62,7 +62,7 @@ resource "vsphere_virtual_machine" "ubuntu_static" {
   vapp {
     properties = {
      hostname    = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
-     password    = var.ubuntu.password
+//     password    = var.ubuntu.password
      public-keys = chomp(tls_private_key.ssh.public_key_openssh)
      user-data   = base64encode(data.template_file.ubuntu_userdata_static[0].rendered)
    }
@@ -114,7 +114,7 @@ resource "vsphere_virtual_machine" "ubuntu_dhcp" {
   vapp {
     properties = {
       hostname    = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
-      password    = var.ubuntu.password
+//      password    = var.ubuntu.password
       public-keys = chomp(tls_private_key.ssh.public_key_openssh)
       user-data   = base64encode(data.template_file.ubuntu_userdata_dhcp[0].rendered)
     }
