@@ -16,7 +16,7 @@ network:
       addresses: [${ip4}]
       gateway4: [${gw4}]
       nameservers:
-        addresses: ${dns}
+        addresses: [${dns}]
 
 hostname: ${hostname}
 
