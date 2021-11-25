@@ -10,7 +10,7 @@ resource "random_string" "ubuntu_password" {
 
 data "template_file" "network" {
   count            = (var.dhcp == false ? length(var.ubuntu_ip4_addresses) : 0)
-  template = file("template/network.template")
+  template = file("templates/network.template")
   vars = {
     ip4 = var.ubuntu_ip4_addresses[count.index]
     gw4 = var.gateway4
