@@ -12,6 +12,7 @@ data "template_file" "network" {
   count            = (var.dhcp == false ? length(var.ubuntu_ip4_addresses) : 0)
   template = file("templates/network.template")
   vars = {
+    if_name = var.ubuntu.if_name
     ip4 = var.ubuntu_ip4_addresses[count.index]
     gw4 = var.gateway4
     dns = var.nameservers

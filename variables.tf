@@ -56,6 +56,7 @@ variable "ubuntu" {
     count = 2
     username = "ubuntu"
     cpu = 1
+    if_name = "ens192"
     memory = 2048
     disk = 20
     wait_for_guest_net_routable = "false"
