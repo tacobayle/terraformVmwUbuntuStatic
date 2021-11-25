@@ -40,7 +40,7 @@ variable "content_library" {
 variable "ubuntu" {
   type = map
   default = {
-    name = "backend-2"
+    basename = "ubuntu-"
     count = 2
     cpu = 1
     memory = 2048
