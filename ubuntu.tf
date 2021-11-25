@@ -12,6 +12,7 @@ data "template_file" "ubuntu_userdata_static" {
     dnsMain = var.ubuntu.dnsMain
     dnsSec = var.ubuntu.dnsSec
     netplanFile = var.ubuntu.netplanFile
+    hostname = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
   }
 }
 
@@ -28,6 +29,7 @@ data "template_file" "ubuntu_userdata_dhcp" {
   vars = {
     password      = var.ubuntu.password
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
+    hostname = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
   }
 }
 

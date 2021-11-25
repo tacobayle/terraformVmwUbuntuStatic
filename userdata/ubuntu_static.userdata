@@ -17,6 +17,8 @@ chpasswd:
     aviadmin: $password
   expire: False
 
+hostname: ${hostname}
+
 write_files:
   - content: |
       #!/bin/bash
