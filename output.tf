@@ -14,6 +14,6 @@ output "ubuntu_password" {
   value = random_string.ubuntu_password.result
 }
 
-//output "ssh_private_key_path" {
-//  value = "~/.ssh/${var.ssh_key.private_key_name}.pem"
-//}
+output "ssh_private_key_path" {
+  value = "~/.ssh/${var.ssh_key.private_key_name}.pem"
+}
