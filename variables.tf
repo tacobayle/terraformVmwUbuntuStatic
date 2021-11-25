@@ -40,7 +40,7 @@ variable "content_library" {
 variable "ubuntu" {
   type = map
   default = {
-    basename = "ubuntu_tf_"
+    basename = "ubuntu-tf-"
     count = 2
     username = "ubuntu"
     cpu = 1

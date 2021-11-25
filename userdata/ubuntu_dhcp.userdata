@@ -1,23 +1,15 @@
 #cloud-config
 users:
   - default
-  - name: aviadmin
-    lock_passwd: true
-    shell: /bin/bash
-    sudo:  ALL=(ALL) NOPASSWD:ALL
-    chpasswd: {expire: False}
-    ssh_authorized_keys:
-      - ${pubkey}
 
 ssh_pwauth: True
 
 chpasswd:
   list: |
     ubuntu:${password}
-    aviadmin:${password}
   expire: False
 
-fqdn: ${hostname}.domain.local
+hostname: ${hostname}
 
 write_files:
   - content: |
