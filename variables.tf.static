@@ -46,5 +46,12 @@ variable "ubuntu" {
     cpu = 1
     memory = 2048
     disk = 20
+    password = "Avi_2020"
+    wait_for_guest_net_routable = "false"
+    ipCidr = "10.7.6.100/24"
+    netplanFile = "/etc/netplan/50-cloud-init.yaml"
+    defaultGw = "10.7.6.1"
+    dnsMain = "172.18.0.15"
+    dnsSec = "10.206.8.131"
   }
 }

@@ -1,10 +1,18 @@
-
+resource "random_string" "ubuntu_password" {
+  length           = 12
+  special          = true
+  min_lower        = 3
+  min_upper        = 3
+  min_numeric      = 3
+  min_special      = 3
+  override_special = "%$&*_"
+}
 
 data "template_file" "ubuntu_userdata_static" {
   template = file("${path.module}/userdata/ubuntu_static.userdata")
   count            = (var.dhcp == false ? 1 : 0)
   vars = {
-    password      = var.ubuntu.password
+    password      = random_string.ubuntu_password.result
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
     ipCidr = var.ubuntu.ipCidr
     ip = split("/", var.ubuntu.ipCidr)[0]
@@ -27,7 +35,7 @@ data "template_file" "ubuntu_userdata_dhcp" {
   template = file("${path.module}/userdata/ubuntu_dhcp.userdata")
   count            = (var.dhcp == true ? 1 : 0)
   vars = {
-    password      = var.ubuntu.password
+    password      = random_string.ubuntu_password.result
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
     hostname = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
   }
