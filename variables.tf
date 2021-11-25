@@ -59,5 +59,6 @@ variable "ubuntu" {
     memory = 2048
     disk = 20
     wait_for_guest_net_routable = "false"
+    netplanFile = "/etc/netplan/50-cloud-init.yaml"
   }
 }

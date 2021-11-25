@@ -53,8 +53,8 @@ variable "ubuntu" {
   type = map
   default = {
     basename = "ubuntu-tf-"
-    username = "ubuntu"
     count = 2
+    username = "ubuntu"
     cpu = 1
     memory = 2048
     disk = 20
