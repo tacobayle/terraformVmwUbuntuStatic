@@ -26,6 +26,10 @@ variable "ssh_key" {
   }
 }
 
+variable "dhcp" {
+  default = true
+}
+
 variable "content_library" {
   default = {
     basename = "content_library_tf_"
@@ -37,6 +41,7 @@ variable "ubuntu" {
   type = map
   default = {
     name = "backend-2"
+    count = 2
     cpu = 1
     memory = 2048
     disk = 20
