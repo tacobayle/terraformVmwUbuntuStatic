@@ -11,10 +11,6 @@ chpasswd:
 
 hostname: ${hostname}
 
-runcmd:
-
-- netplan apply
-
 write_files:
   - content: |
       #!/bin/bash
