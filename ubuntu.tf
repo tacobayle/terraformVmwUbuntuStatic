@@ -1,7 +1,7 @@
 
 
 data "template_file" "ubuntu_userdata_static" {
-  template = file("${path.module}/userdata/ubuntu.userdata")
+  template = file("${path.module}/userdata/ubuntu_static.userdata")
   count            = (var.dhcp == false ? 1 : 0)
   vars = {
     password      = var.ubuntu.password
@@ -114,7 +114,7 @@ resource "vsphere_virtual_machine" "ubuntu_dhcp" {
   }
 
   connection {
-    host        = vsphere_virtual_machine.ubuntu_dhcp.default_ip_address
+    host        = self.default_ip_address
     type        = "ssh"
     agent       = false
     user        = "ubuntu"
