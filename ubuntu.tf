@@ -8,17 +8,25 @@ resource "random_string" "ubuntu_password" {
   override_special = "%$&*_"
 }
 
+data "template_file" "network" {
+  count            = (var.dhcp == false ? length(var.ubuntu_ip4_addresses) : 0)
+  template = file("template/network.template")
+  vars = {
+    ip4 = var.ubuntu_ip4_addresses[count.index]
+    gw4 = var.gateway4
+    dns = var.nameservers
+  }
+}
+
 data "template_file" "ubuntu_userdata_static" {
   template = file("${path.module}/userdata/ubuntu_static.userdata")
   count            = (var.dhcp == false ? length(var.ubuntu_ip4_addresses) : 0)
   vars = {
     password      = random_string.ubuntu_password.result
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
-    ip4 = var.ubuntu_ip4_addresses[count.index]
-    gw4 = var.gateway4
-    dns = var.nameservers
     netplanFile = var.ubuntu.netplanFile
     hostname = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
+    network_config  = base64encode(data.template_file.network.rendered)
   }
 }
 
