@@ -77,7 +77,7 @@ resource "vsphere_virtual_machine" "ubuntu_static" {
  }
 
   connection {
-   host        = self.default_ip_address
+   host        = split("/", var.ubuntu_ip4_addresses[count.index])[0]
    type        = "ssh"
    agent       = false
    user        = "ubuntu"
