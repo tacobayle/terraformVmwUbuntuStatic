@@ -46,5 +46,6 @@ variable "ubuntu" {
     cpu = 1
     memory = 2048
     disk = 20
+    wait_for_guest_net_routable = "false"
   }
 }
