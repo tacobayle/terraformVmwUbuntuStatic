@@ -48,7 +48,7 @@ resource "vsphere_virtual_machine" "ubuntu_static" {
 
   disk {
     size             = var.ubuntu.disk
-//    label            = "${var.ubuntu.basename}${random_string.ubuntu_name[count.index].result}.lab_vmdk"
+    label            = "${var.ubuntu.basename}.lab_vmdk"
     thin_provisioned = true
   }
 
