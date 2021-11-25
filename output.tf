@@ -15,5 +15,5 @@ output "ubuntu_password" {
 }
 
 //output "ssh_private_key_path" {
-//  value = "~/.ssh/${var.ssh_key.private_key_basename}.pem"
+//  value = "~/.ssh/${var.ssh_key.private_key_name}.pem"
 //}

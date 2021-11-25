@@ -33,7 +33,7 @@ variable "ssh_key" {
   default = {
     algorithm            = "RSA"
     rsa_bits             = "4096"
-    private_key_basename = "ssh_private_key_tf_ubuntu_"
+    private_key_name = "ssh_private_key_tf_ubuntu"
     file_permission      = "0600"
   }
 }
