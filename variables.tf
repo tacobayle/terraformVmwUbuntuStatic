@@ -21,7 +21,7 @@ variable "ssh_key" {
   default = {
     algorithm            = "RSA"
     rsa_bits             = "4096"
-    private_key_basename = "ssh_private_key_ubuntu_"
+    private_key_basename = "ssh_private_key_tf_ubuntu_"
     file_permission      = "0600"
   }
 }
@@ -40,7 +40,7 @@ variable "content_library" {
 variable "ubuntu" {
   type = map
   default = {
-    basename = "ubuntu-"
+    basename = "ubuntu_tf_"
     count = 2
     cpu = 1
     memory = 2048
