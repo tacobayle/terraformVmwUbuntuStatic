@@ -16,11 +16,7 @@ write_files:
       #!/bin/bash
       echo "cloud init done" | tee /tmp/cloudInitDone.log
     path: /opt/bootstrap.sh
-    permissions: 0755
-
-  - content: |
-      ubuntu ALL=(ALL) NOPASSWD:ALL
-    path: /etc/sudoers.d/ubuntu
+    permissions: "0755"
 
 runcmd:
   - /opt/bootstrap.sh
