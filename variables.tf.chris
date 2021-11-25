@@ -8,6 +8,7 @@ variable "vsphere_server" {}
 variable "vcenter" {
   type = map
   default = {
+    server        = ""
     dc            = "N1-DC"
     cluster       = "N1-Cluster1"
     datastore     = "vsanDatastore"
@@ -16,21 +17,35 @@ variable "vcenter" {
   }
 }
 
+variable "ubuntu_ip4_addresses" {
+  default = ["10.7.6.100/24", "10.7.6.101/24"]
+}
+
+variable "gateway4" {
+  default = "10.7.6.1"
+}
+
+variable "nameservers" {
+  default = "172.18.0.15, 10.206.8.131"
+}
+
 variable "ssh_key" {
   type = map
   default = {
     algorithm            = "RSA"
     rsa_bits             = "4096"
-    private_key_name = "ssh_private_key_ubuntu"
+    private_key_name = "ssh_private_key_tf_ubuntu"
     file_permission      = "0600"
   }
 }
 
+variable "dhcp" {
+  default = false
+}
+
 variable "content_library" {
   default = {
-    name = "Content Library Build new web server"
-//    description = "Content Library Build new web server"
-//    files = ["/home/christoph/Downloads/bionic-server-cloudimg-amd64.ova"]
+    basename = "content_library_tf_"
     source_url = "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.ova"
   }
 }
@@ -38,16 +53,14 @@ variable "content_library" {
 variable "ubuntu" {
   type = map
   default = {
-    name = "backend-2"
+    basename = "ubuntu-tf-"
+    count = 2
+    username = "ubuntu"
     cpu = 1
+    if_name = "ens192"
     memory = 2048
     disk = 20
-    password = "Avi_2020"
     wait_for_guest_net_routable = "false"
-    ipCidr = "10.7.6.100/24"
     netplanFile = "/etc/netplan/50-cloud-init.yaml"
-    defaultGw = "10.7.6.1"
-    dnsMain = "172.18.0.15"
-    dnsSec = "10.206.8.131"
   }
 }
