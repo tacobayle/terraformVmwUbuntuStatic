@@ -3,11 +3,11 @@
 #
 variable "vsphere_username" {}
 variable "vsphere_password" {}
-variable "vsphere_server" {}
 
 variable "vcenter" {
   type = map
   default = {
+    server        = "wdc-06-vc12.oc.vmware.com"
     dc            = "wdc-06-vc12"
     cluster       = "wdc-06-vc12c01"
     datastore     = "wdc-06-vc12c01-vsan"

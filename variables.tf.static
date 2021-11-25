@@ -3,17 +3,29 @@
 #
 variable "vsphere_username" {}
 variable "vsphere_password" {}
-variable "vsphere_server" {}
 
 variable "vcenter" {
   type = map
   default = {
+    server        = "wdc-06-vc12.oc.vmware.com"
     dc            = "wdc-06-vc12"
     cluster       = "wdc-06-vc12c01"
     datastore     = "wdc-06-vc12c01-vsan"
     network       = "vxw-dvs-34-virtualwire-3-sid-6120002-wdc-06-vc12-avi-mgmt"
     resource_pool = "wdc-06-vc12c01/Resources"
   }
+}
+
+variable "ubuntu_ip4_addresses" {
+  default = ["10.206.112.56/22", "10.206.112.57/22"]
+}
+
+variable "gateway4" {
+  default = "10.206.112.1"
+}
+
+variable "nameservers" {
+  default = ["10.206.8.130, 10.206.8.130, 10.206.8.131"]
 }
 
 variable "ssh_key" {
@@ -27,7 +39,7 @@ variable "ssh_key" {
 }
 
 variable "dhcp" {
-  default = true
+  default = false
 }
 
 variable "content_library" {
@@ -47,10 +59,6 @@ variable "ubuntu" {
     memory = 2048
     disk = 20
     wait_for_guest_net_routable = "false"
-    ipCidr = "10.7.6.100/24"
     netplanFile = "/etc/netplan/50-cloud-init.yaml"
-    defaultGw = "10.7.6.1"
-    dnsMain = "172.18.0.15"
-    dnsSec = "10.206.8.131"
   }
 }

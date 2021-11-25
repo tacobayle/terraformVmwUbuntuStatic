@@ -10,15 +10,13 @@ resource "random_string" "ubuntu_password" {
 
 data "template_file" "ubuntu_userdata_static" {
   template = file("${path.module}/userdata/ubuntu_static.userdata")
-  count            = (var.dhcp == false ? 1 : 0)
+  count            = (var.dhcp == false ? var.ubuntu.count : 0)
   vars = {
     password      = random_string.ubuntu_password.result
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
-    ipCidr = var.ubuntu.ipCidr
-    ip = split("/", var.ubuntu.ipCidr)[0]
-    defaultGw = var.ubuntu.defaultGw
-    dnsMain = var.ubuntu.dnsMain
-    dnsSec = var.ubuntu.dnsSec
+    ip4 = var.ubuntu_ip4_addresses[count.index]
+    gw4 = var.gateway4
+    dns = var.nameservers
     netplanFile = var.ubuntu.netplanFile
     hostname = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
   }
@@ -74,7 +72,7 @@ resource "vsphere_virtual_machine" "ubuntu_static" {
      hostname    = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
 //     password    = var.ubuntu.password
      public-keys = chomp(tls_private_key.ssh.public_key_openssh)
-     user-data   = base64encode(data.template_file.ubuntu_userdata_static[0].rendered)
+     user-data   = base64encode(data.template_file.ubuntu_userdata_static[count.index].rendered)
    }
  }
 
