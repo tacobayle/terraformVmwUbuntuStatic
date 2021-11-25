@@ -15,7 +15,7 @@ data "template_file" "ubuntu_userdata_static" {
   }
 }
 
-resource "random_string" "ubuntu_name" {
+resource "random_string" "ubuntu_name_id" {
   count            = var.ubuntu.count
   length           = 8
   special          = true
@@ -33,7 +33,7 @@ data "template_file" "ubuntu_userdata_dhcp" {
 
 resource "vsphere_virtual_machine" "ubuntu_static" {
   count            = (var.dhcp == false ? var.ubuntu.count : 0)
-  name             = "${var.ubuntu.basename}${random_string.ubuntu_name[count.index].result}"
+  name             = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
   datastore_id     = data.vsphere_datastore.datastore.id
   resource_pool_id = data.vsphere_resource_pool.pool.id
   network_interface {
@@ -43,7 +43,7 @@ resource "vsphere_virtual_machine" "ubuntu_static" {
   num_cpus = var.ubuntu.cpu
   memory = var.ubuntu.memory
   wait_for_guest_net_routable = var.ubuntu.wait_for_guest_net_routable
-  guest_id = "guestid-${var.ubuntu.basename}${random_string.ubuntu_name[count.index].result}"
+  guest_id = "guestid-${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
 
   disk {
     size             = var.ubuntu.disk
@@ -61,7 +61,7 @@ resource "vsphere_virtual_machine" "ubuntu_static" {
 
   vapp {
     properties = {
-     hostname    = "${var.ubuntu.basename}${random_string.ubuntu_name[count.index].result}"
+     hostname    = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
      password    = var.ubuntu.password
      public-keys = chomp(tls_private_key.ssh.public_key_openssh)
      user-data   = base64encode(data.template_file.ubuntu_userdata_static[0].rendered)
@@ -85,7 +85,7 @@ resource "vsphere_virtual_machine" "ubuntu_static" {
 
 resource "vsphere_virtual_machine" "ubuntu_dhcp" {
   count            = (var.dhcp == true ? var.ubuntu.count : 0)
-  name             = "${var.ubuntu.basename}${random_string.ubuntu_name[count.index].result}"
+  name             = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
   datastore_id     = data.vsphere_datastore.datastore.id
   resource_pool_id = data.vsphere_resource_pool.pool.id
   network_interface {
@@ -95,11 +95,11 @@ resource "vsphere_virtual_machine" "ubuntu_dhcp" {
   num_cpus = var.ubuntu.cpu
   memory = var.ubuntu.memory
   wait_for_guest_net_routable = var.ubuntu.wait_for_guest_net_routable
-  guest_id = "guestid-${var.ubuntu.basename}${random_string.ubuntu_name[count.index].result}"
+  guest_id = "guestid-${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
 
   disk {
     size             = var.ubuntu.disk
-    label            = "${var.ubuntu.basename}${random_string.ubuntu_name[count.index].result}.lab_vmdk"
+    label            = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}.lab_vmdk"
     thin_provisioned = true
   }
 
@@ -113,7 +113,7 @@ resource "vsphere_virtual_machine" "ubuntu_dhcp" {
 
   vapp {
     properties = {
-      hostname    = "${var.ubuntu.basename}${random_string.ubuntu_name[count.index].result}"
+      hostname    = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
       password    = var.ubuntu.password
       public-keys = chomp(tls_private_key.ssh.public_key_openssh)
       user-data   = base64encode(data.template_file.ubuntu_userdata_dhcp[0].rendered)
