@@ -1,7 +1,7 @@
 
 resource "null_resource" "download_ubuntu" {
   provisioner "local-exec" {
-    command = "curl -o /tmp/$(basename ${var.content_library.source_url}) ${var.content_library.source_url}"
+    command = "curl -s -o /tmp/$(basename ${var.content_library.source_url}) ${var.content_library.source_url}"
   }
 }
 

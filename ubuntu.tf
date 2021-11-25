@@ -99,7 +99,7 @@ resource "vsphere_virtual_machine" "ubuntu_dhcp" {
 
   disk {
     size             = var.ubuntu.disk
-    label            = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}.lab_vmdk"
+    label            = "${var.ubuntu.basename}.lab_vmdk"
     thin_provisioned = true
   }
 
