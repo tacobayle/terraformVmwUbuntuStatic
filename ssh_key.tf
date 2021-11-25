@@ -12,6 +12,6 @@ resource "random_string" "private_key_file_name" {
 
 resource "local_file" "private_key" {
   content         = tls_private_key.ssh.private_key_pem
-  filename        = pathexpand("~/.ssh/${var.ssh_key.private_key_basename}${random_string.private_key_file_name}.pem")
+  filename        = pathexpand("~/.ssh/${var.ssh_key.private_key_basename}${random_string.private_key_file_name.result}.pem")
   file_permission = var.ssh_key.file_permission
 }
