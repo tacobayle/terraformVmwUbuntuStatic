@@ -6,15 +6,14 @@ resource "null_resource" "download_ubuntu" {
 }
 
 resource "random_string" "content_library_name" {
-  length           = 6
+  length           = 8
   special          = true
-  min_lower        = 6
+  min_lower        = 8
 }
 
 resource "vsphere_content_library" "library" {
-  name            = "${var.content_library.basename}-${random_string.content_library_name.result}"
+  name            = "${var.content_library.basename}${random_string.content_library_name.result}"
   storage_backing = [data.vsphere_datastore.datastore.id]
-  description     = var.content_library.description
 }
 
 resource "vsphere_content_library_item" "file" {
